@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="James Calby">
+  <meta name="description" content="James Calby — Data Systems Specialist, HMIS Administrator, and Technical Consultant specializing in homeless services technology and HUD compliance.">
+  <title>James Calby — Data Systems &amp; HMIS Technical Consultant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: #1a2233;
+      --bg-card-hover: #1f2a3d;
+      --text-primary: #e8edf5;
+      --text-secondary: #8b95a8;
+      --text-muted: #5a6478;
+      --accent: #3b82f6;
+      --accent-dim: rgba(59, 130, 246, 0.15);
+      --accent-glow: rgba(59, 130, 246, 0.3);
+      --green: #10b981;
+      --green-dim: rgba(16, 185, 129, 0.15);
+      --orange: #f59e0b;
+      --orange-dim: rgba(245, 158, 11, 0.15);
+      --purple: #8b5cf6;
+      --purple-dim: rgba(139, 92, 246, 0.15);
+      --border: #1e293b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: color 0.3s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-secondary);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.6s;
+    }
+
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.8s;
+    }
+
+    .hero-location .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* ABOUT */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .about-content p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .journey {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .journey-step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .journey-step .arrow {
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-card {
+      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .skill-icon.blue { background: var(--accent-dim); color: var(--accent); }
+    .skill-icon.green { background: var(--green-dim); color: var(--green); }
+    .skill-icon.orange { background: var(--orange-dim); color: var(--orange); }
+    .skill-icon.purple { background: var(--purple-dim); color: var(--purple); }
+
+    .skill-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .project-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .project-lang {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .lang-python { background: var(--green-dim); color: var(--green); }
+    .lang-sql { background: var(--purple-dim); color: var(--purple); }
+    .lang-html { background: var(--orange-dim); color: var(--orange); }
+
+    .project-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      font-weight: 300;
+    }
+
+    .project-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .project-feature {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.3s;
+    }
+
+    .project-link:hover { gap: 0.7rem; }
+
+    /* BLOG */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .blog-card {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .blog-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .blog-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card h3 a {
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .blog-card h3 a:hover { color: var(--accent); }
+
+    .blog-excerpt {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .blog-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.3s;
+    }
+
+    .blog-read-more:hover { gap: 0.7rem; }
+
+    /* CONTACT */
+    .contact-section {
+      text-align: center;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .contact-section .section-label,
+    .contact-section .section-title {
+      text-align: center;
+    }
+
+    .contact-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: all 0.3s;
+    }
+
+    .contact-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .contact-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* DIVIDER */
+    .divider {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(10, 14, 23, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 1rem 2rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; }
+      .hamburger { display: block; }
+
+      .hero { padding: 5rem 1.5rem 3rem; }
+      section { padding: 3rem 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 769px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* SCROLL ANIMATIONS */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">jc_</div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#blog">Writing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Data Systems &bull; HMIS &bull; Technical Consulting</div>
+      <h1>I build systems that help <span class="highlight">people get housed.</span></h1>
+      <p class="hero-sub">Data Systems Specialist and HMIS Administrator with experience across the full lifecycle of homeless services, from case management in the field to building and configuring the technology that supports it.</p>
+      <div class="hero-location">
+        <span class="dot"></span>
+        Clearwater, FL &mdash; Available for remote work
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><hr></div>
+
+  <!-- ABOUT -->
+  <section id="about" class="fade-in">
+    <div class="section-label">About</div>
+    <h2 class="section-title">The Full Lifecycle</h2>
+    <div class="about-content">
+      <p>I started in homeless services as a case manager working directly with veterans. I sat across from clients in shelters and field offices, helped them navigate benefits, find housing, and rebuild stability. That work taught me what frontline staff actually need from the systems they use every day.</p>
+      <p>From there I moved into data, compliance, and system administration. Today I configure and manage HMIS platforms, build forms and workflows, write SQL and Python for reporting, and support hundreds of staff across multiple offices and programs. I understand HUD data standards because I've had to collect that data myself, report on it, and make sure it's right.</p>
+      <p>That dual perspective, from the field to the database, is what drives my work. I don't just build technically sound systems. I build systems that work for the people using them under real conditions, with real clients, under real deadlines.</p>
+    </div>
+    <div class="journey">
+      <div class="journey-step">Case Manager</div>
+      <div class="journey-step"><span class="arrow">&rarr;</span> GPD Specialist</div>
+      <div class="journey-step"><span class="arrow">&rarr;</span> Data &amp; Compliance</div>
+      <div class="journey-step"><span class="arrow">&rarr;</span> HMIS Administrator</div>
+      <div class="journey-step"><span class="arrow">&rarr;</span> Technical Consultant</div>
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- SKILLS -->
+  <section id="skills" class="fade-in">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">What I Work With</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon blue">&#9678;</div>
+          <h3>HMIS &amp; Compliance</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">HUD Data Standards</span>
+          <span class="skill-tag">CoC APR</span>
+          <span class="skill-tag">SSVF</span>
+          <span class="skill-tag">GPD</span>
+          <span class="skill-tag">HUD-VASH</span>
+          <span class="skill-tag">ESG</span>
+          <span class="skill-tag">Data Quality</span>
+          <span class="skill-tag">VAWA / DV</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon green">&#9670;</div>
+          <h3>Platform Administration</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">CaseWorthy</span>
+          <span class="skill-tag">ClientTrack</span>
+          <span class="skill-tag">App Builder</span>
+          <span class="skill-tag">Workflows</span>
+          <span class="skill-tag">Dashboards</span>
+          <span class="skill-tag">Form Design</span>
+          <span class="skill-tag">System Config</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon purple">&#9672;</div>
+          <h3>Development &amp; Data</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL Server</span>
+          <span class="skill-tag">HTML / CSS</span>
+          <span class="skill-tag">Custom Views</span>
+          <span class="skill-tag">Automation</span>
+          <span class="skill-tag">Data Analysis</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon orange">&#9673;</div>
+          <h3>Operations &amp; Tools</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">FreshService</span>
+          <span class="skill-tag">Monday.com</span>
+          <span class="skill-tag">Teams</span>
+          <span class="skill-tag">SharePoint</span>
+          <span class="skill-tag">Ticketing</span>
+          <span class="skill-tag">Documentation</span>
+          <span class="skill-tag">Training</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="fade-in">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Technical Work</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>HMIS Data Quality Analyzer</h3>
+          <span class="project-lang lang-python">Python</span>
+        </div>
+        <p>A configurable data quality validation tool that checks HMIS export data against HUD universal data element standards. Flags missing required fields, validates date ranges, checks for logical inconsistencies, and generates summary reports with error trending. Designed to catch compliance issues before they show up in APR submissions.</p>
+        <div class="project-features">
+          <span class="project-feature">CSV parsing</span>
+          <span class="project-feature">HUD validation rules</span>
+          <span class="project-feature">Error trending</span>
+          <span class="project-feature">Configurable thresholds</span>
+          <span class="project-feature">Summary reports</span>
+        </div>
+        <a href="https://github.com/calby" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>HMIS Compliance Reporting Views</h3>
+          <span class="project-lang lang-sql">SQL</span>
+        </div>
+        <p>A collection of SQL Server views designed for HMIS reporting against relational case management databases. Covers active enrollment counts by program, data completeness scoring, demographic breakdowns, length-of-stay calculations, and housing outcome tracking. Built to support operational dashboards and compliance monitoring.</p>
+        <div class="project-features">
+          <span class="project-feature">SQL Server</span>
+          <span class="project-feature">Joins &amp; CTEs</span>
+          <span class="project-feature">Aggregations</span>
+          <span class="project-feature">Date logic</span>
+          <span class="project-feature">Program filtering</span>
+        </div>
+        <a href="https://github.com/calby" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Case Management Form Templates</h3>
+          <span class="project-lang lang-html">HTML / CSS</span>
+        </div>
+        <p>Responsive HTML and CSS templates designed for case management workflows. Includes intake forms, case note templates, and service tracking layouts optimized for frontline staff. Focused on usability: clear field grouping, logical tab order, required field indicators, and mobile-friendly layouts for field workers using tablets.</p>
+        <div class="project-features">
+          <span class="project-feature">Responsive design</span>
+          <span class="project-feature">Accessibility</span>
+          <span class="project-feature">Field validation</span>
+          <span class="project-feature">Print-friendly</span>
+          <span class="project-feature">Mobile-first</span>
+        </div>
+        <a href="https://github.com/calby" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- BLOG -->
+  <section id="blog" class="fade-in">
+    <div class="section-label">Writing</div>
+    <h2 class="section-title">Thoughts &amp; Perspectives</h2>
+    <div class="blog-grid">
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3><a href="blog/bridging-the-gap.html">Bridging the Gap Between HMIS Software and Frontline Staff</a></h3>
+        <p class="blog-excerpt">The best HMIS platform in the world doesn't matter if case managers can't use it effectively in the field. After years on both sides of the equation, here's what I've learned about building technology that actually serves the mission.</p>
+        <a href="blog/bridging-the-gap.html" class="blog-read-more">Read more &rarr;</a>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-date">March 2026</div>
+        <h3><a href="blog/data-quality-matters.html">Why Data Quality Is the Foundation of Homeless Services</a></h3>
+        <p class="blog-excerpt">Bad data doesn't just fail audits. It fails people. When HMIS records are incomplete or inaccurate, the consequences ripple from federal reporting all the way down to whether a veteran gets the housing they need.</p>
+        <a href="blog/data-quality-matters.html" class="blog-read-more">Read more &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section fade-in">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="contact-desc">Interested in working together or have questions about HMIS systems and technical consulting? I'd like to hear from you.</p>
+    <div class="contact-links">
+      <a href="mailto:james@jamescalby.com" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
+        Email
+      </a>
+      <a href="https://github.com/calby" target="_blank" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 James Calby. Built with purpose.</p>
+  </footer>
+
+  <script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

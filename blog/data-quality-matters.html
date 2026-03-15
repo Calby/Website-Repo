@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="James Calby">
+  <meta name="description" content="Bad data doesn't just fail audits. It fails people.">
+  <title>Why Data Quality Is the Foundation of Homeless Services — James Calby</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: #1a2233;
+      --text-primary: #e8edf5;
+      --text-secondary: #8b95a8;
+      --text-muted: #5a6478;
+      --accent: #3b82f6;
+      --border: #1e293b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: gap 0.3s;
+    }
+    .back-link:hover { gap: 0.7rem; }
+    article {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+    .article-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    article p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    article h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    article strong { color: var(--text-primary); font-weight: 500; }
+    .divider-end {
+      text-align: center;
+      margin-top: 3rem;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <a href="../index.html" class="back-link">&larr; Back</a>
+    <div class="article-date">March 2026</div>
+    <h1>Why Data Quality Is the Foundation of Homeless Services</h1>
+
+    <p>When people talk about data quality in HMIS, the conversation usually starts with audits and APR submissions. That makes sense. Nobody wants to submit a report to HUD with 40% missing exit destinations. But the real cost of bad data isn't a failed audit. It's a failed outcome for someone who needed help.</p>
+
+    <h2>What Bad Data Actually Looks Like</h2>
+
+    <p>Bad data in homeless services isn't dramatic. It's not a corrupted database or a system crash. It's quiet. It's a Social Security number field left blank because the case manager was in a rush. It's a prior living situation marked as "data not collected" because the client was upset and the worker moved on. It's an income assessment that never got updated at annual review because no one flagged it.</p>
+
+    <p>Each of those individually seems small. But when you aggregate them across hundreds of enrollments, across multiple programs, across a full fiscal year, the picture gets distorted. Your Point-in-Time count is off. Your chronic homelessness numbers don't reflect reality. Your program outcomes look worse than they are because exit destinations weren't recorded. Or worse, they look better than they are because someone entered "permanent housing" as a default instead of verifying.</p>
+
+    <h2>It's Rarely a People Problem</h2>
+
+    <p>The instinct when data quality drops is to blame staff. "Case managers aren't filling out the forms." That's sometimes true, but it's almost never the whole story. More often, the system is working against them.</p>
+
+    <p>I've seen forms where a required field was buried on the third tab of a nested sub-form. I've seen workflows where a case manager had to click through 12 screens to record a single service. I've seen systems where the dropdown options didn't match the actual situations case managers encounter, so they picked the closest option or skipped it entirely.</p>
+
+    <p><strong>Data quality is a system design problem disguised as a staff performance problem.</strong> If you want better data, don't send another training email. Look at the forms. Look at the workflows. Look at where the friction is and remove it.</p>
+
+    <h2>Catching It Early</h2>
+
+    <p>The best approach to data quality isn't fixing errors after they happen. It's building systems that prevent them. Required fields should be required at the form level, not just in policy documents. Date fields should have validation so you can't accidentally enter a future date for a past event. Enrollment workflows should surface missing data elements before the case manager moves to the next step.</p>
+
+    <p>Beyond form design, organizations need visibility into their data quality in real time, not once a year when the APR is due. A simple report that shows completeness rates by program, by office, by data element, run weekly, gives administrators the ability to catch problems while they're still small. By the time you're prepping for the APR, it should be a formality, not a scramble.</p>
+
+    <p>I've built tools that do exactly this. Pull the raw data, validate it against HUD standards, flag what's missing, show trending over time. The technology isn't complicated. The hard part is building the habit of looking at it regularly and acting on what you find.</p>
+
+    <h2>Why It Matters Beyond Compliance</h2>
+
+    <p>Good data quality isn't just about keeping HUD happy. It's about understanding who you're serving, what's working, and where the gaps are. It's about being able to tell a funder that your rapid rehousing program has a 78% housing retention rate at 12 months, and knowing that number is real. It's about a case manager pulling up a client's record and having a complete picture of their history, their services, their progress.</p>
+
+    <p>The data in HMIS represents real people in real situations. Every blank field is a piece of someone's story that didn't get recorded. Every inaccurate entry is a decision that might get made on wrong information. That's why data quality matters. Not because of audits. Because of people.</p>
+
+    <div class="divider-end">&#8718;</div>
+  </article>
+</body>
+</html>

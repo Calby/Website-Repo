@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Management Form Templates — Demo</title>
+  <style>
+    /* =====================================================
+       Case Management Form Templates
+       =====================================================
+       Responsive HTML/CSS templates designed for case
+       management workflows. Focused on usability for
+       frontline staff: clear field grouping, logical tab
+       order, required field indicators, and mobile-friendly
+       layouts for field workers using tablets.
+       
+       Author: James Calby
+       ===================================================== */
+    
+    :root {
+      --bg: #f8f9fa;
+      --white: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #4a5568;
+      --border: #d1d5db;
+      --border-focus: #3b82f6;
+      --accent: #3b82f6;
+      --accent-light: #eff6ff;
+      --danger: #ef4444;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+      --section-border: #e5e7eb;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --mono: 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 1rem;
+    }
+
+    /* PAGE LAYOUT */
+    .page-header {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .page-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .page-header .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .demo-nav {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-nav button {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .demo-nav button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .demo-nav button:hover:not(.active) {
+      border-color: var(--accent);
+    }
+
+    /* FORM CONTAINER */
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: none;
+    }
+
+    .form-container.active { display: block; }
+
+    /* FORM SECTIONS */
+    .form-section {
+      background: var(--white);
+      border: 1px solid var(--section-border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--section-border);
+    }
+
+    .form-section-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-required {
+      background: #fef2f2;
+      color: var(--danger);
+    }
+
+    .badge-optional {
+      background: #f0fdf4;
+      color: var(--success);
+    }
+
+    /* FIELD GRID */
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .field-row.single { grid-template-columns: 1fr; }
+    .field-row.thirds { grid-template-columns: repeat(3, 1fr); }
+
+    /* FIELD STYLING */
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .field label .required {
+      color: var(--danger);
+      margin-left: 0.15rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .field textarea { resize: vertical; min-height: 100px; }
+
+    .field .field-hint {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+
+    /* VALIDATION STATES */
+    .field.error input,
+    .field.error select,
+    .field.error textarea {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .field .error-msg {
+      font-size: 0.75rem;
+      color: var(--danger);
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .field.error .error-msg { display: block; }
+
+    /* CASE NOTE SPECIFIC */
+    .case-note-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: var(--accent-light);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .case-note-meta strong {
+      color: var(--text);
+    }
+
+    .word-count {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    /* SERVICE LOG TABLE */
+    .service-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .service-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .service-table td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--section-border);
+    }
+
+    .service-table input,
+    .service-table select {
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+
+    /* ALERT / INFO BOXES */
+    .alert {
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .alert-warning {
+      background: var(--warning-bg);
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+
+    .alert-info {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+
+    /* BUTTONS */
+    .form-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.65rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover { background: #2563eb; }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    /* PRINT STYLES */
+    @media print {
+      body { background: white; padding: 0; }
+      .demo-nav { display: none; }
+      .form-container { display: block !important; page-break-after: always; }
+      .form-section { border: 1px solid #ccc; break-inside: avoid; }
+      .form-actions { display: none; }
+      .btn { display: none; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+      .field-row.thirds { grid-template-columns: 1fr; }
+      .form-actions { flex-direction: column; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>Case Management Form Templates</h1>
+    <p class="subtitle">Responsive templates for intake, case notes, and service tracking. Tap a form below to preview.</p>
+  </div>
+
+  <div class="demo-nav">
+    <button class="active" onclick="showForm('intake')">Client Intake</button>
+    <button onclick="showForm('casenote')">Case Note</button>
+    <button onclick="showForm('service')">Service Log</button>
+  </div>
+
+  <!-- ========================= INTAKE FORM ========================= -->
+  <div class="form-container active" id="form-intake">
+    
+    <div class="alert alert-info">
+      &#9432; All fields marked with <strong style="color:#ef4444">*</strong> are required by HUD HMIS Data Standards.
+    </div>
+
+    <!-- Demographics -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Client Demographics</h2>
+        <span class="section-badge badge-required">HUD Required</span>
+      </div>
+
+      <div class="field-row thirds">
+        <div class="field">
+          <label>First Name <span class="required">*</span></label>
+          <input type="text" placeholder="Enter first name" required>
+        </div>
+        <div class="field">
+          <label>Middle Name</label>
+          <input type="text" placeholder="Enter middle name">
+        </div>
+        <div class="field">
+          <label>Last Name <span class="required">*</span></label>
+          <input type="text" placeholder="Enter last name" required>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Date of Birth <span class="required">*</span></label>
+          <input type="date" required>
+        </div>
+        <div class="field">
+          <label>SSN (Last 4)</label>
+          <input type="text" maxlength="4" pattern="[0-9]{4}" placeholder="####">
+          <span class="field-hint">Client may decline to provide</span>
+        </div>
+      </div>
+
+      <div class="field-row thirds">
+        <div class="field">
+          <label>Gender <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+            <option value="2">A gender other than singularly female or male</option>
+            <option value="3">Transgender</option>
+            <option value="4">Questioning</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Race <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="1">American Indian, Alaska Native, or Indigenous</option>
+            <option value="2">Asian or Asian American</option>
+            <option value="3">Black, African American, or African</option>
+            <option value="4">Native Hawaiian or Pacific Islander</option>
+            <option value="5">White</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ethnicity <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="0">Non-Hispanic/Non-Latin(a)(o)(x)</option>
+            <option value="1">Hispanic/Latin(a)(o)(x)</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Veteran Status <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Disabling Condition <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Housing History -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Housing History</h2>
+        <span class="section-badge badge-required">HUD Required</span>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Prior Living Situation <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="1">Place not meant for habitation</option>
+            <option value="16">Emergency shelter</option>
+            <option value="18">Safe Haven</option>
+            <option value="15">Foster care / group home</option>
+            <option value="6">Hospital (non-psychiatric)</option>
+            <option value="7">Jail, prison, or juvenile facility</option>
+            <option value="25">Long-term care / nursing home</option>
+            <option value="4">Psychiatric hospital or facility</option>
+            <option value="5">Substance abuse treatment facility</option>
+            <option value="29">Residential project (no housing)</option>
+            <option value="14">Hotel or motel (no voucher)</option>
+            <option value="2">Transitional housing</option>
+            <option value="32">Host home (non-crisis)</option>
+            <option value="36">Staying with family (temporary)</option>
+            <option value="35">Staying with friends (temporary)</option>
+            <option value="28">Rental (with subsidy)</option>
+            <option value="19">Rental (no subsidy)</option>
+            <option value="3">Permanent housing for formerly homeless</option>
+            <option value="31">Owned with subsidy</option>
+            <option value="33">Owned without subsidy</option>
+            <option value="34">Staying with family (permanent)</option>
+            <option value="10">Staying with friends (permanent)</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Approximate Length of Stay <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="10">One night or less</option>
+            <option value="11">Two to six nights</option>
+            <option value="2">One week or more, less than one month</option>
+            <option value="3">One to three months</option>
+            <option value="4">More than three months, less than one year</option>
+            <option value="5">One year or longer</option>
+            <option value="8">Client doesn't know</option>
+            <option value="9">Client prefers not to answer</option>
+            <option value="99">Data not collected</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enrollment -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Program Enrollment</h2>
+        <span class="section-badge badge-required">Required</span>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Program <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select Program —</option>
+            <option>SSVF - Rapid Re-Housing</option>
+            <option>SSVF - Homelessness Prevention</option>
+            <option>GPD - Bridge Housing</option>
+            <option>GPD - Low Demand</option>
+            <option>HUD-VASH</option>
+            <option>Emergency Shelter</option>
+            <option>Permanent Supportive Housing</option>
+            <option>Coordinated Entry</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Entry Date <span class="required">*</span></label>
+          <input type="date" required>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Relationship to Head of Household <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option value="1">Self (Head of Household)</option>
+            <option value="2">Spouse or partner</option>
+            <option value="3">Child</option>
+            <option value="4">Other family member</option>
+            <option value="5">Other non-family member</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Household ID</label>
+          <input type="text" placeholder="Auto-generated" readonly style="background: #f3f4f6;">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary">Save Draft</button>
+      <button class="btn btn-primary">Submit Enrollment</button>
+    </div>
+  </div>
+
+  <!-- ========================= CASE NOTE FORM ========================= -->
+  <div class="form-container" id="form-casenote">
+
+    <div class="case-note-meta">
+      <span><strong>Client:</strong> [Client Name]</span>
+      <span><strong>Program:</strong> [Program Name]</span>
+      <span><strong>Enrollment:</strong> [Enrollment ID]</span>
+      <span><strong>Case Manager:</strong> [Staff Name]</span>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Case Note Entry</h2>
+        <span class="section-badge badge-required">Required</span>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Date of Contact <span class="required">*</span></label>
+          <input type="date" required>
+        </div>
+        <div class="field">
+          <label>Contact Type <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option>Face-to-Face (Office)</option>
+            <option>Face-to-Face (Field)</option>
+            <option>Phone Call</option>
+            <option>Video Call</option>
+            <option>Text / Email</option>
+            <option>Collateral Contact</option>
+            <option>Attempted Contact</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Note Category <span class="required">*</span></label>
+          <select required>
+            <option value="">— Select —</option>
+            <option>Housing Search</option>
+            <option>Benefits / Income</option>
+            <option>Employment</option>
+            <option>Health / Medical</option>
+            <option>Mental Health</option>
+            <option>Substance Use</option>
+            <option>Legal</option>
+            <option>Transportation</option>
+            <option>Life Skills</option>
+            <option>Crisis Intervention</option>
+            <option>Follow-Up</option>
+            <option>General</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Duration (minutes)</label>
+          <input type="number" min="1" max="480" placeholder="e.g. 30">
+        </div>
+      </div>
+
+      <div class="field-row single">
+        <div class="field">
+          <label>Case Note <span class="required">*</span></label>
+          <textarea rows="8" placeholder="Document the interaction, services provided, client progress, barriers encountered, and next steps..." required oninput="updateWordCount(this)"></textarea>
+          <div class="word-count">0 words</div>
+          <span class="field-hint">Include: purpose of contact, discussion summary, services provided, barriers, and planned follow-up actions.</span>
+        </div>
+      </div>
+
+      <div class="field-row single">
+        <div class="field">
+          <label>Follow-Up Actions</label>
+          <textarea rows="3" placeholder="List specific next steps with target dates..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning">
+      &#9888; Case notes should be completed within 48 hours of client contact.
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary">Save Draft</button>
+      <button class="btn btn-primary">Submit Case Note</button>
+    </div>
+  </div>
+
+  <!-- ========================= SERVICE LOG ========================= -->
+  <div class="form-container" id="form-service">
+
+    <div class="case-note-meta">
+      <span><strong>Client:</strong> [Client Name]</span>
+      <span><strong>Program:</strong> [Program Name]</span>
+      <span><strong>Reporting Period:</strong> [Month/Year]</span>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Services Provided</h2>
+        <span class="section-badge badge-required">Required</span>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="service-table">
+          <thead>
+            <tr>
+              <th style="width:120px">Date</th>
+              <th style="width:200px">Service Type</th>
+              <th>Description</th>
+              <th style="width:100px">Units</th>
+              <th style="width:120px">Amount ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="date"></td>
+              <td>
+                <select>
+                  <option value="">— Select —</option>
+                  <option>Rental Assistance</option>
+                  <option>Utility Assistance</option>
+                  <option>Security Deposit</option>
+                  <option>Moving Costs</option>
+                  <option>Transportation</option>
+                  <option>Emergency Housing</option>
+                  <option>Food Assistance</option>
+                  <option>Clothing</option>
+                  <option>Case Management</option>
+                  <option>Legal Services</option>
+                  <option>Job Training</option>
+                  <option>Childcare</option>
+                  <option>Other</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Brief description"></td>
+              <td><input type="number" min="0" placeholder="1"></td>
+              <td><input type="text" placeholder="0.00"></td>
+            </tr>
+            <tr>
+              <td><input type="date"></td>
+              <td>
+                <select>
+                  <option value="">— Select —</option>
+                  <option>Rental Assistance</option>
+                  <option>Utility Assistance</option>
+                  <option>Security Deposit</option>
+                  <option>Moving Costs</option>
+                  <option>Transportation</option>
+                  <option>Emergency Housing</option>
+                  <option>Food Assistance</option>
+                  <option>Clothing</option>
+                  <option>Case Management</option>
+                  <option>Legal Services</option>
+                  <option>Job Training</option>
+                  <option>Childcare</option>
+                  <option>Other</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Brief description"></td>
+              <td><input type="number" min="0" placeholder="1"></td>
+              <td><input type="text" placeholder="0.00"></td>
+            </tr>
+            <tr>
+              <td><input type="date"></td>
+              <td>
+                <select>
+                  <option value="">— Select —</option>
+                  <option>Rental Assistance</option>
+                  <option>Utility Assistance</option>
+                  <option>Security Deposit</option>
+                  <option>Moving Costs</option>
+                  <option>Transportation</option>
+                  <option>Emergency Housing</option>
+                  <option>Food Assistance</option>
+                  <option>Clothing</option>
+                  <option>Case Management</option>
+                  <option>Legal Services</option>
+                  <option>Job Training</option>
+                  <option>Childcare</option>
+                  <option>Other</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Brief description"></td>
+              <td><input type="number" min="0" placeholder="1"></td>
+              <td><input type="text" placeholder="0.00"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn btn-secondary" style="margin-top: 1rem; font-size: 0.85rem;" onclick="alert('In a live system, this adds a new row to the service table.')">+ Add Service Row</button>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <h2>Notes</h2>
+        <span class="section-badge badge-optional">Optional</span>
+      </div>
+
+      <div class="field-row single">
+        <div class="field">
+          <label>Additional Notes</label>
+          <textarea rows="4" placeholder="Any additional context about services provided..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary">Save Draft</button>
+      <button class="btn btn-primary">Submit Services</button>
+    </div>
+  </div>
+
+  <script>
+    function showForm(formId) {
+      document.querySelectorAll('.form-container').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.demo-nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById('form-' + formId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function updateWordCount(textarea) {
+      const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+      textarea.parentElement.querySelector('.word-count').textContent = words + ' words';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="James Calby">
+  <meta name="description" content="The best HMIS platform in the world doesn't matter if case managers can't use it effectively in the field.">
+  <title>Bridging the Gap Between HMIS Software and Frontline Staff — James Calby</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: #1a2233;
+      --text-primary: #e8edf5;
+      --text-secondary: #8b95a8;
+      --text-muted: #5a6478;
+      --accent: #3b82f6;
+      --border: #1e293b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: gap 0.3s;
+    }
+    .back-link:hover { gap: 0.7rem; }
+    article {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+    .article-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    article p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    article h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    article strong { color: var(--text-primary); font-weight: 500; }
+    .divider-end {
+      text-align: center;
+      margin-top: 3rem;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <a href="../index.html" class="back-link">&larr; Back</a>
+    <div class="article-date">March 2026</div>
+    <h1>Bridging the Gap Between HMIS Software and Frontline Staff</h1>
+
+    <p>There's a pattern I've seen play out over and over in homeless services technology. A vendor builds a form. The form captures every data element HUD requires. It passes technical review. It gets deployed. And then a case manager in a shelter tries to use it on a tablet with a spotty connection while a client is sitting across from them, and the whole thing falls apart.</p>
+
+    <p>The form isn't broken. It works exactly as designed. But the design didn't account for the real world.</p>
+
+    <h2>The Disconnect</h2>
+
+    <p>Most HMIS platforms are built by people who understand databases, compliance requirements, and software architecture. That's necessary. You can't build a system that meets HUD data standards without that expertise. But there's a second layer of understanding that often gets missed: what it actually feels like to use this software in the middle of a client intake, with a line of people waiting, with a veteran who's frustrated and exhausted, with cell service that cuts in and out.</p>
+
+    <p>I've been on both sides of this. I spent years as a case manager before moving into system administration and data. I've sat in the chair doing enrollments. I've also built the forms and workflows that other case managers use. That experience taught me something simple but important: <strong>if the technology creates friction, staff will work around it.</strong> They'll skip fields. They'll save incomplete records and plan to come back later (they won't). They'll keep paper notes on the side. And your data quality suffers.</p>
+
+    <h2>Where It Goes Wrong</h2>
+
+    <p>The most common mistake is translating paper forms directly into digital ones. A paper intake packet might have 30 pages with signature lines on every one. When that gets built digitally, suddenly a case manager is tapping through 30 screens, flipping a tablet back and forth for signatures, waiting for each page to load. What took 45 minutes on paper now takes two hours on a screen.</p>
+
+    <p>The fix isn't to remove required data elements. Compliance matters. The fix is to rethink the workflow. Maybe signatures are only needed in four places instead of 30. Maybe related fields can be grouped onto fewer screens. Maybe the enrollment process can be broken into stages so the most critical information gets captured first and supplemental data gets collected over the next few days.</p>
+
+    <p>These aren't technical problems. They're design problems. And they require someone who understands both the compliance requirements and the operational reality to solve them.</p>
+
+    <h2>Building Better</h2>
+
+    <p>The best HMIS implementations I've seen share a few things in common. First, the people configuring the system have spent time watching staff actually use it. Not in a training room, in the field. Second, there's a feedback loop. When case managers report that something doesn't work, that feedback reaches the people who can change the configuration, not just a ticket queue. Third, the system is designed for the hardest conditions, not the easiest. If it works on a tablet in a shelter with bad connectivity, it'll work anywhere.</p>
+
+    <p>This is the gap I think about constantly. Not the gap between what HMIS software can do and what HUD requires, that's well covered. The gap between what the software does and what the people using it actually need. Closing that gap is where the real work happens.</p>
+
+    <div class="divider-end">&#8718;</div>
+  </article>
+</body>
+</html>
