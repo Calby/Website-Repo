@@ -600,6 +600,13 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Fallback: show content if JS fails */
+    noscript ~ * .fade-in,
+    .no-js .fade-in {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
 
@@ -734,7 +741,7 @@
     <h2 class="section-title">Get In Touch</h2>
     <p class="contact-desc">Interested in working together or have questions about HMIS systems and technical consulting? I'd like to hear from you.</p>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#b4ded5d9d1c7f4ded5d9d1c7d7d5d8d6cd9ad7dbd9" class="contact-btn">
+      <a href="mailto:jamescalby@gmail.com" class="contact-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
         Email
       </a>
@@ -750,7 +757,7 @@
     <p>&copy; 2026 James Calby. Built with purpose.</p>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Scroll animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -764,4 +771,11 @@
 
     // Close mobile nav on link click
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.a
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
