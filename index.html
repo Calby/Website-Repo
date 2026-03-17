@@ -591,21 +591,19 @@
 
     /* SCROLL ANIMATIONS */
     .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
+      opacity: 1;
+      transform: translateY(0);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .fade-in.animate {
+      opacity: 0;
+      transform: translateY(20px);
     }
 
-    /* Fallback: show content if JS fails */
-    noscript ~ * .fade-in,
-    .no-js .fade-in {
+    .fade-in.animate.visible {
       opacity: 1;
-      transform: none;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -621,6 +619,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -735,13 +734,57 @@
 
   <div class="divider"><hr></div>
 
+  <!-- PROJECTS -->
+  <section id="projects" class="fade-in">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Technical Work</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>AI Prompts for Case Management Administration</h3>
+          <span class="project-lang" style="background: var(--accent-dim); color: var(--accent);">AI / Prompts</span>
+        </div>
+        <p>A collection of structured AI prompts designed for HMIS and case management system administrators. Covers program build planning, changelog generation, release notes, help desk response templates, feature launch communications, SSRS report building, and content humanization. Works with Claude, Gemini, ChatGPT, Copilot, and open source models. Turns general-purpose AI assistants into specialized tools for the work administrators actually do.</p>
+        <div class="project-features">
+          <span class="project-feature">8 prompts</span>
+          <span class="project-feature">Multi-platform</span>
+          <span class="project-feature">Build planning</span>
+          <span class="project-feature">Changelogs</span>
+          <span class="project-feature">Help desk</span>
+          <span class="project-feature">SSRS reports</span>
+        </div>
+        <a href="https://github.com/Calby/ai-prompts-case-management" class="project-link" target="_blank">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>CaseWorthy HTML Dashboard Templates</h3>
+          <span class="project-lang" style="background: var(--orange-dim); color: var(--orange);">HTML / CSS</span>
+        </div>
+        <p>Pure HTML/CSS templates designed for CaseWorthy's WYSIWYG editor. Includes a ready-to-use help center dashboard, a universal AI prompt for building custom templates on any platform, a quick reference cheat sheet with SVG icons and layout patterns, and a downloadable Claude skill. No JavaScript, no external dependencies, inline CSS only. Paste into CaseWorthy and customize.</p>
+        <div class="project-features">
+          <span class="project-feature">Inline CSS</span>
+          <span class="project-feature">SVG icons</span>
+          <span class="project-feature">Claude skill</span>
+          <span class="project-feature">Universal AI prompt</span>
+          <span class="project-feature">No JavaScript</span>
+        </div>
+        <a href="https://github.com/Calby/caseworthy-html-dashboard-templates" class="project-link" target="_blank">View on GitHub &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
   <!-- CONTACT -->
   <section id="contact" class="contact-section fade-in">
     <div class="section-label">Contact</div>
     <h2 class="section-title">Get In Touch</h2>
     <p class="contact-desc">Interested in working together or have questions about HMIS systems and technical consulting? I'd like to hear from you.</p>
     <div class="contact-links">
-      <a href="mailto:jamescalby@gmail.com" class="contact-btn">
+      <a href="/cdn-cgi/l/email-protection#c4aea5a9a1b7a7a5a8a6bd84a3a9a5ada8eaa7aba9" class="contact-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
         Email
       </a>
@@ -758,20 +801,22 @@
   </footer>
 
   <script>
-    // Scroll animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var sections = document.querySelectorAll('.fade-in');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    sections.forEach(function(el) {
+      el.classList.add('animate');
+      observer.observe(el);
+    });
 
-    // Close mobile nav on link click
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
         document.querySelector('.nav-links').classList.remove('open');
       });
     });
